@@ -47,13 +47,6 @@ window.src = [
     'loginback.png',
     'shareback.png'
 ]
-window.objSrc = [
-    {
-        back: 'back1.jpg',
-        man: 'man1.png',
-        manc: 'manc1.png',
-    }
-]
 var csnum = 1;  
 var imgscount = 0;
 var tokeni =window.localStorage.halloweentoken?window.localStorage.halloweentoken :''
@@ -63,9 +56,7 @@ src.forEach(function (v, i) {
     var imgs = new Image();
     imgs.onload = function () {
         if (src.length > imgscount) {
-            // loading.innerText = Math.round(imgscount / src.length * 100)
             document.getElementById('amintiao').style.width = Math.round(imgscount / src.length * 100)+'%'
-            // console.log(Math.round(imgscount / src.length * 100))
             imgscount++
         }
         if(imgscount == src.length) {
@@ -77,4 +68,3 @@ src.forEach(function (v, i) {
     }
     imgs.src = src[i]
 });
-console.log(src)

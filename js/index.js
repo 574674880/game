@@ -70,9 +70,7 @@ var startimg = new Image();
 startimg.src = src[0];
 var lwen = new Image()
 lwen.src = src[37]
-var cxt = '', w = '', h = '',
-    img = new Image();
-img.src = src[9];
+var cxt = '', w = '', h = '';
 var index = parseInt(Math.random() * 29)
 var then = Date.now();
 var canvas = document.getElementById('canvas');
@@ -95,10 +93,7 @@ function dataInit() {//初始化题目和答案
         speed: 30, // movement in pixels per second
         f: canvas.width
     };
-    i = 1;
-    ib = 1;
-    ic = 1;
-    id = 1;
+    i = 1, ib = 1, ic = 1, id = 1;
     newText = "";
     newanswera = "";
     newanswerb = "";
@@ -109,6 +104,8 @@ function dataInit() {//初始化题目和答案
     fallKif = false;
 }
 //初始化所有需要得图片
+var img = new Image();
+img.src = src[9];
 var man = new Image();//答题图片（人物）
 man.src = src[7];
 var mans = new Image();//答题成功图片（人物）
@@ -175,10 +172,8 @@ var yes = new Image();
 yes.src = src[31];
 var sugar6 = new Image();
 sugar6.src = src[32];
-
 var geback = new Image();
 geback.src = src[33];
-
 var shareImg = new Image();
 shareImg.src = src[34];
 
@@ -308,7 +303,7 @@ canvas.addEventListener('click', function (e) {//点击事件
                 pai = 20;
                 if (page == 6) {
                     clearInterval(setval)
-                    _ajaxtijiao(eval(judge.join("+")))
+                    //请求
                     zhongjie = true;
                 }
             }
@@ -317,7 +312,7 @@ canvas.addEventListener('click', function (e) {//点击事件
 })
 function clickzong(x, y) {//总结页面按钮事件
     if (!zhongjie) { return false }
-    var fw = w/4,fh = h/4
+    var fw = w / 4, fh = h / 4
     if (x > fw * 0.08 && y > fh * 0.8 && x < fw * 0.08 + fw * 0.22 && y < fh * 0.8 + fh * 0.2) {
         //分享按钮
         $('.shareback').show()
@@ -387,12 +382,15 @@ function initCav() {//所有动画放进去
     fallKey(delta / 1000, img, man, color)
     requestAnimationFrame(initCav)
 }
-function SuccessKey(delt, img, manimg, color) {
-    if (!successkey) return false
-    dstartif = false
+function backImg(img, manimg) {
     cxt.beginPath()
     cxt.drawImage(img, 0 - dri, 0 - dry, canvas.width, canvas.height);
     cxt.drawImage(manimg, w * 0.48, h * -0.04, w / 2, h * 1.18);
+}
+function SuccessKey(delt, img, manimg, color) {
+    if (!successkey) return false
+    dstartif = false
+    backImg(img, manimg)
     animText(delt, color)
     cxt.fillStyle = 'rgba(0,0,0,0.5)'
     cxt.rect(0 - dri, 0 - dry, canvas.width, canvas.height)
@@ -409,10 +407,7 @@ function SuccessKey(delt, img, manimg, color) {
 function draw1(delt, img, manimg, color) {
     if (!animti) return false;
     dstartif = false
-    cxt.beginPath();
-    cxt.drawImage(img, 0 - dri, 0 - dry, canvas.width, canvas.height);
-    cxt.drawImage(manimg, w * 0.48, h * -0.04, w / 2, h * 1.18);
-    cxt.closePath();
+    backImg(img, manimg)
     cxt.beginPath();
     cxt.fillStyle = '#2d1f87';
     cxt.strokeStyle = '#fff';
@@ -420,7 +415,6 @@ function draw1(delt, img, manimg, color) {
     cxt.arc(100, 75, 50, 0, 2 * Math.PI);
     cxt.stroke();
     cxt.fill();
-    cxt.closePath();
     cxt.beginPath();
     cxt.fillStyle = '#9f0';
     cxt.font = "50px Verdana ,Arial, Helvetica, sans-serif";
@@ -432,10 +426,7 @@ function fallKey(delt, img, manimg, color) {
     if (!fallKif) return false
     dstartif = false
     animti = false;
-    cxt.beginPath();
-    cxt.drawImage(img, 0 - dri, 0 - dry, canvas.width, canvas.height);
-    cxt.drawImage(manimg, w * 0.48, h * -0.04, w / 2, h * 1.18);
-    cxt.closePath();
+    backImg(img, manimg)
     animText(delt, color);
     drawMivie();
     current.all = false
@@ -479,8 +470,8 @@ function sess() {//答题对
     }
 }
 var fallKif = false
-function fall() {//答题对
-    fallKif = true
+function fall() {//答题错误
+    fallKif = true;
     successkey = false;
     judge[page - 1] = 0
     initnum()
@@ -492,7 +483,7 @@ function fall() {//答题对
         if (page < 6) {
             judge[page - 1] = 0
         }
-        dataInit(); 
+        dataInit();
         pagetitle(page++)
         pai = 20;
         if (page == 6) {

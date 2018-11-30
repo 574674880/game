@@ -125,19 +125,10 @@
 
     <title>糖果星球镇，万圣“答”大奖</title>
     <link rel="stylesheet" href="./css/style.css">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100762518-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'UA-100762518-2');
-    </script>
 </head>
 
 <body>
     <div class="shareback"></div>
-    <!-- <div style="width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.3);position: fixed;z-index: 1000;" class="hideat"></div> -->
     <div id="box">
         <div id="loading">
             <div class="getiao">
@@ -201,8 +192,6 @@
 <script src="./js/topic.js"></script>
 <script src="./js/index.js"></script>
 <script src="./js/zepto.js"></script>
-<!-- <script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.3.0.js"></script> -->
-<!-- <script src="./js/ajax.js"></script> -->
 <script>
     $('.x').on('click', function () {
         $('.zhongbang').hide()
@@ -210,19 +199,6 @@
     $('.xyx').on('click', function () {
         $('.xieyi').hide()
     })
-    // $('.hideat').on('click', function () {
-    //     window.localStorage.halloweentoken = ''
-    //     alert('清除登录')
-    // })
-    // var winHeight = $(window).height();
-    // $(window).resize(function () {
-    //     var thisHeight = $(this).height();
-    //     if (winHeight - thisHeight > 50) {
-    //         $(".login").css({height:winHeight+'px'})
-    //     } else {
-    //         $(".login").css({height:'100%'})
-    //     }
-    // });
     $('.shareback').click(function () {
         $('.shareback').hide()
     });
