@@ -104,18 +104,12 @@ function dataInit() {//初始化题目和答案
     fallKif = false;
 }
 //初始化所有需要得图片
-var img = new Image();
-img.src = src[9];
-var man = new Image();//答题图片（人物）
-man.src = src[7];
-var mans = new Image();//答题成功图片（人物）
-mans.src = src[8];
-var succrssimg = new Image();//答题成功弹窗图片
-succrssimg.src = src[22];
-var lights = new Image();//答题成功弹窗光背景图片
-lights.src = src[21];
-var sugar1 = new Image();
-sugar1.src = src[16];
+var img = imgs[9];
+var man =  imgs[7];//答题图片（人物）
+var mans = imgs[8];//答题成功图片（人物）
+var succrssimg =imgs[22];//答题成功弹窗图片
+var lights = imgs[21];//答题成功弹窗光背景图片
+var sugar1 = imgs[16];
 var animti = false;
 var borderColor = "rgb(187,141,105)";
 var successkey = false;
@@ -154,31 +148,18 @@ function pagetitle(page) {
             break;
     }
 }
-var zong = new Image();
-zong.src = src[24];
-var man1 = new Image();
-man1.src = src[25];
-var man2 = new Image();
-man2.src = src[26];
-var man3 = new Image();
-man3.src = src[27];
-var man4 = new Image();
-man4.src = src[28];
-var man5 = new Image();
-man5.src = src[29];
-var no = new Image();
-no.src = src[30];
-var yes = new Image();
-yes.src = src[31];
-var sugar6 = new Image();
-sugar6.src = src[32];
-var geback = new Image();
-geback.src = src[33];
-var shareImg = new Image();
-shareImg.src = src[34];
-
-var see = new Image();
-see.src = src[35];
+var zong = imgs[24];
+var man1 = imgs[25];
+var man2 = imgs[26];
+var man3 = imgs[27];
+var man4 = imgs[28];
+var man5 = imgs[29];
+var no = imgs[30];
+var yes = imgs[31];
+var sugar6 = imgs[32];
+var geback = imgs[33];
+var shareImg = imgs[34];
+var see = imgs[35];
 
 var once = new Image();
 once.src = src[36];
@@ -271,7 +252,6 @@ canvas.addEventListener('click', function (e) {//点击事件
     //     logiif = true;
     //     return false;
     // }
-
     if (animtiif) {
         if (successkey) {
             dataInit();
@@ -283,12 +263,13 @@ canvas.addEventListener('click', function (e) {//点击事件
         if (fallKif) {
             return false
         }
+        ci = 0
         clicktext(tw, rw, rh, th, xx, yy, index);
         animti = true;
     } else {
         clickzong(xx, yy);
     }
-    if (animti) {
+    if (animti && ci !==0) {
         pai = 20;
         clearInterval(setval)
         setval = setInterval(function () {
@@ -453,12 +434,7 @@ var current = {
     IAnsertA: 0,
     all: false
 }
-var newText = "";
-var newanswera = "";
-var newanswerb = "";
-var newanswerc = "";
-var newanswerd = "";
-var pai = 11;
+var newText,newanswera,newanswerb,newanswerc,newanswerd,pai = 11;
 function sess() {//答题对
     judge[page - 1] = 1
     successkey = true
@@ -494,11 +470,14 @@ function fall() {//答题错误
     }, 1300)
     return false
 }
+var ci = 0
 function clicktext(tw, rw, rh, th, x, y, index) {
     tw = tw / 4; rw = rw / 4; rh = rh / 4; th = th / 4
+    
     if (!current.all) return false
     if (x > tw && x < tw + (rw / 2 - 10) && y > th - 12 && y < (th - 12) + rh / 3) {
-        if (Topic[index].correct != 1) {
+        ci = 1
+      if (Topic[index].correct != 1) {
             fall()
             console.log('你打错了1')
         } else {
@@ -507,7 +486,8 @@ function clicktext(tw, rw, rh, th, x, y, index) {
         }
     }
     if (x > tw * 3.5 && x < (tw * 3.5) + rw / 2 - 10 && y > th - 12 && y < (th - 12) + rh / 3) {
-        if (Topic[index].correct != 2) {
+         ci = 2
+         if (Topic[index].correct != 2) {
             console.log('你打错了2')
             fall()
         } else {
@@ -516,7 +496,8 @@ function clicktext(tw, rw, rh, th, x, y, index) {
         }
     }
     if (x > tw && x < tw + (rw / 2 - 10) && y > (th - 12) + rh / 3 && y < (th - 12) + rh / 3 + rh / 3) {
-        if (Topic[index].correct != 3) {
+         ci = 3
+         if (Topic[index].correct != 3) {
             console.log('你打错了3')
             fall()
         } else {
@@ -525,7 +506,8 @@ function clicktext(tw, rw, rh, th, x, y, index) {
         }
     }
     if (x > tw * 3.5 && x < (tw * 3.5) + rw / 2 - 10 && y > (th - 12) + rh / 3 && y < (th - 12) + rh / 3 + rh / 3) {
-        if (Topic[index].correct != 4) {
+        ci = 4
+       if (Topic[index].correct != 4) {
             console.log('你打错了4')
             fall()
         } else {
@@ -533,6 +515,8 @@ function clicktext(tw, rw, rh, th, x, y, index) {
             sess()
         }
     }
+    console.log(ci)
+        return ci
 }
 var rw, rh, th, tw, tmw
 function animText(data, color) {//打字效果
@@ -591,25 +575,6 @@ var hero = {
     speed: 30, // movement in pixels per second
     f: canvas.width
 };
-function admisAnima(data, tion) {//加载动画
-    cxt.beginPath()
-    cxt.fillStyle = '#000'
-    if (hero.f < -canvas.width) {
-        hero.f = -canvas.width
-    } else {
-        hero.f -= hero.speed * data;
-    }
-    cxt.rect(hero.f, 0, canvas.width, canvas.height / 8)
-    cxt.rect(-hero.f, canvas.height / 8, canvas.width, canvas.height / 8)
-    cxt.rect(hero.f, canvas.height / 8 * 2, canvas.width, canvas.height / 8)
-    cxt.rect(-hero.f, canvas.height / 8 * 3, canvas.width, canvas.height / 8)
-    cxt.rect(hero.f, canvas.height / 8 * 4, canvas.width, canvas.height / 8)
-    cxt.rect(-hero.f, canvas.height / 8 * 5, canvas.width, canvas.height / 8)
-    cxt.rect(hero.f, canvas.height / 8 * 6, canvas.width, canvas.height / 8)
-    cxt.rect(-hero.f, canvas.height / 8 * 7, canvas.width, canvas.height / 8)
-    cxt.fill()
-    cxt.closePath()
-}
 var x = 2;
 var y = 0;
 var t = 1;
@@ -632,16 +597,11 @@ function drawLine() {
     ctx.stroke();
     cxt.closePath();
 }
-var sugar1 = new Image()
-sugar1.src = src[16]
-var sugar2 = new Image()
-sugar2.src = src[17]
-var sugar3 = new Image()
-sugar3.src = src[18]
-var sugar4 = new Image()
-sugar4.src = src[19]
-var sugar5 = new Image()
-sugar5.src = src[20]
+var sugar1 =imgs[16]
+var sugar2 = imgs[17]
+var sugar3 = imgs[18]
+var sugar4 = imgs[19]
+var sugar5 = imgs[20]
 var nulrou = []
 for (var i = 0; i < 100; i++) {
     nulrou.push(Math.random() * 80 - 40)
@@ -650,16 +610,10 @@ var nulro2 = []
 for (var i = 0; i < 100; i++) {
     nulro2.push(Math.random() * 60 - 20)
 }
-var rot = 1
-var rr = 1
-var rr1 = 1
-var t1 = 0
-var t2 = 0
-var t3 = 0
-var t4 = 0
+var rot = 1,rr = 1,rr1 = 1,t1 = 0,t2 = 0,t3 = 0,t4 = 0;
 function initnum() {//初始化失败效果
     t2 = 0;
-    t1 = 0; t3 = 0
+    t1 = 0; t3 = 0;
     t4 = 0
     rr1 = 1;
     rr = 1;
@@ -682,7 +636,6 @@ function dongImg(sugar, x, y, t, r) {
 }
 function drawBall(x, y) {
     //画圆球
-
     cxt.beginPath();
     cxt.save()
     rot = rot + 0.5
